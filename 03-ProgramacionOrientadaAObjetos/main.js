@@ -56,3 +56,61 @@ const miguelito = new Studen2({
   age: 28,
   name: "Miguel",
 });
+
+// / / / / / / / Ventajas de la programacion orientasa a objetos / / / / / / /
+
+// Prototipo
+class Student3 {
+  constructor({
+    name,
+    email,
+    username,
+    twitter = undefined,
+    instagram = undefined,
+    facebook = undefined,
+    approvedCourses = [],
+    learningPaths = []
+  }) {
+    this.name = name;
+    this.email = email;
+    this.username = username;
+    this.socialMedia = {
+      twitter,
+      instagram,
+      facebook,
+    }
+    this.approvedCourses = approvedCourses;
+    this.learningPaths = learningPaths;
+  }
+}
+class LearningPaths {
+  constructor({
+    name,
+    courses = [],
+  }) {
+    this.name= name;
+    this.courses= courses;
+  }
+}
+
+// istancia 
+const desarrolloWeb = new LearningPaths({
+  name: "Escuela de Desarrollo WEB",
+  courses: ["Curso definitivo de HTML y CSS", "Curso Practico de HTML Y CSS"],
+});
+
+const juan2 = new Student3 ({
+  name: "JuanDC",
+  username: "juandc",
+  email: "juanito@platzi.com",
+  twitter: "fjuandc",
+  learningPaths: [desarrolloWeb],
+})
+
+const miguel2 = new Student3({
+  name: "Miguelito",
+  username: "miguelitofeliz",
+  email: "miguelito@platzi.com",
+  instagram: "miguelito_feliz",
+});
+

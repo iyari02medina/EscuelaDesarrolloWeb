@@ -57,7 +57,7 @@ const miguelito = new Studen2({
   name: "Miguel",
 });
 
-// / / / / / / / Ventajas de la programacion orientasa a objetos / / / / / / /
+// / / / / / / / ABSTRACCION EN LA PROGRAMACION ORIENTADA O OBJETOS / / / / / / /
 
 // Prototipo
 class Student3 {
@@ -88,15 +88,74 @@ class LearningPaths {
     name,
     courses = [],
   }) {
-    this.name= name;
+    this._name= name;
     this.courses= courses;
+  }
+  get name(){
+    return this._name
+  }
+  set name(nuevoNombre){
+    if (
+      nuevoNombre !== desarrolloWeb.name ||
+      nuevoNombre !== escuelaData.name ||
+      nuevoNombre !== escuelaVideojuegos.name
+    ) {
+      console.error("No lo haga compa");
+    }
+  }
+}
+
+class Courses {
+  constructor({
+    name,
+    clases = [],
+  }) {
+    this._name = name; // con el "_" le pedimo a los programadores que no llamen el atributo name
+    this.clases= clases;
+  }
+  get name(){
+    return this._name
+  }
+  set name(nuevoNombrecito){
+    if (
+      nuevoNombrecito !== cursoProgBasica.name ||
+      nuevoNombrecito !== cursoDefHtmlCss.name ||
+      nuevoNombrecito !== cursoPracHtmlCss.name  
+    ) {
+      console.error("No lo haga compa");
+    } else {
+      this._name = nuevoNombrecito;
+    }
   }
 }
 
 // istancia 
+const cursoProgBasica = new Courses ({
+  name: "Curso gratis de programacion basica"
+});
+
+const cursoDefHtmlCss = new Courses({
+  name: "Curso definitivo de HTML y CSS",
+});
+
+const cursoPracHtmlCss = new Courses({
+  name: "Curso Practico de HTML Y CSS",
+});
+
+
 const desarrolloWeb = new LearningPaths({
   name: "Escuela de Desarrollo WEB",
-  courses: ["Curso definitivo de HTML y CSS", "Curso Practico de HTML Y CSS"],
+  courses: [cursoProgBasica, cursoDefHtmlCss, cursoPracHtmlCss],
+});
+
+const escuelaData = new LearningPaths({
+  name: "Escuela de Data Science",
+  courses: [cursoProgBasica, "Curso de data business", "Curso de Data viz"],
+});
+
+const escuelaVideojuegos = new LearningPaths({
+  name: "Escuela de Desarrollo de Videojuegos ",
+  courses: [cursoProgBasica, "Curso Unity", "Curso de Unreal"],
 });
 
 const juan2 = new Student3 ({
@@ -104,7 +163,7 @@ const juan2 = new Student3 ({
   username: "juandc",
   email: "juanito@platzi.com",
   twitter: "fjuandc",
-  learningPaths: [desarrolloWeb],
+  learningPaths: [desarrolloWeb, escuelaData],
 })
 
 const miguel2 = new Student3({
@@ -112,5 +171,34 @@ const miguel2 = new Student3({
   username: "miguelitofeliz",
   email: "miguelito@platzi.com",
   instagram: "miguelito_feliz",
+  learningPaths: [escuelaData, escuelaVideojuegos]
 });
 
+// / / / / / / / / / / / / / / / ENCAPSULAMENTO / / / / / / / / / / 
+
+// prototipo
+function videoPlay(id){
+  const urlSecreta = "https://platzisecreto.com" + id;
+  console.log("Se esta reproduciendo desde la url" + urlSecreta)
+}
+
+function videoStop(id){
+  const urlSecreta = "https://platzisecreto.com" + id;
+  console.log("Pausamos la url" + urlSecreta)
+}
+
+export class PlatziClass { // usamos "export" para definir en los modulos, cuales son los unicos bloques de codigo, con el cual podemos ejecutar desde cualquir otro script 
+  constructor({
+    name,
+    videoID,
+  }) {
+    this.name = name;
+    this.videoID = videoID;
+  }
+  reproducir(){
+    videoPlay(this.videoID)
+  }
+  pausar(){
+    videoStop(this.videoID) 
+  }
+}

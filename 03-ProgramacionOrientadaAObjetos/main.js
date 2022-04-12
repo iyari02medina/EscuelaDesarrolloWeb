@@ -59,8 +59,29 @@ const miguelito = new Studen2({
 
 // / / / / / / / ABSTRACCION EN LA PROGRAMACION ORIENTADA O OBJETOS / / / / / / /
 
+// Polimorfismo
+class Comment {
+  constructor({
+    content,
+    studentName,
+    studentRole = "estudiante",
+  }) {
+    this.content = content;
+    this.studentName = studentName;
+    this.studentRole = studentRole;
+    this.likes = 0;
+  }
+
+  // metodo
+  publicar(){
+    console.log(this.studentName + "(" + this.studentRole + ")");
+    console.log(this.likes + " Likes");
+    console.log(this.content)
+  }
+}
+
 // Prototipo
-class Student3 {
+class Student3 { // clase madre
   constructor({
     name,
     email,
@@ -82,7 +103,58 @@ class Student3 {
     this.approvedCourses = approvedCourses;
     this.learningPaths = learningPaths;
   }
+
+  publicarComentario(commentContent) {
+    const comment = new Comment ({
+      content: commentContent,
+      studentName: this.name,
+    });
+    comment.publicar();
+  }
+
 }
+
+class FreeStudent extends Student3{ // "extends" para crear una extencion de la clase madre
+  constructor(props){ // "props" es para decir que todas las propiedades de nuestras instancias esten enviando. "props puede ser cualquier nombre"
+    super(props); //"super()" nos permite referenciar al constructor de nuestra clase madre
+  }
+
+  // metodo
+  approvedCourse(newCurse){
+    if(newCurse.isFree){
+      this.approvedCourses.push(newCurse);
+    } else {
+      console.warn("Lo sentimos, " + this.name + ", solo puedes tomar cursos abiertos");
+    }
+  }
+} 
+
+class BasicStudent extends Student3 {
+  constructor(props) {
+    super(props);
+  }
+
+  approvedCourse(newCurse) {
+    if (newCurse.lang !== "english") {
+      this.approvedCourses.push(newCurse);
+    } else {
+      console.warn(
+        "Lo sentimos, " + this.name + ", no puedes tomar cursos en ingles"
+      );
+    }
+  }
+}
+
+class ExpertStudent extends Student3 {
+  constructor(props) {
+    super(props);
+  }
+
+  approvedCourse(newCurse) {
+      this.approvedCourses.push(newCurse);   
+  }
+}
+
 class LearningPaths {
   constructor({
     name,
@@ -109,9 +181,13 @@ class Courses {
   constructor({
     name,
     clases = [],
+    isFree = false,
+    lang = "spanish"
   }) {
     this._name = name; // con el "_" le pedimo a los programadores que no llamen el atributo name
     this.clases= clases;
+    this.isFree = isFree;
+    this.lang = lang;
   }
   get name(){
     return this._name
@@ -129,9 +205,29 @@ class Courses {
   }
 }
 
+class TeacherStudent extends Student3 {
+  constructor(props) {
+    super(props);
+  }
+
+  approvedCourse(newCurse) {
+    this.approvedCourses.push(newCurse);
+  }
+
+  publicarComentario(commentContent) {
+    const comment = new Comment({
+      content: commentContent,
+      studentName: this.name,
+      studentRole: "profesor",
+    });
+    comment.publicar();
+  }
+}
+
 // istancia 
 const cursoProgBasica = new Courses ({
-  name: "Curso gratis de programacion basica"
+  name: "Curso gratis de programacion basica",
+  isFree: true,
 });
 
 const cursoDefHtmlCss = new Courses({
@@ -140,6 +236,7 @@ const cursoDefHtmlCss = new Courses({
 
 const cursoPracHtmlCss = new Courses({
   name: "Curso Practico de HTML Y CSS",
+  lang: "english",
 });
 
 
@@ -158,7 +255,7 @@ const escuelaVideojuegos = new LearningPaths({
   courses: [cursoProgBasica, "Curso Unity", "Curso de Unreal"],
 });
 
-const juan2 = new Student3 ({
+const juan2 = new FreeStudent ({
   name: "JuanDC",
   username: "juandc",
   email: "juanito@platzi.com",
@@ -166,12 +263,19 @@ const juan2 = new Student3 ({
   learningPaths: [desarrolloWeb, escuelaData],
 })
 
-const miguel2 = new Student3({
+const miguel2 = new BasicStudent({
   name: "Miguelito",
   username: "miguelitofeliz",
   email: "miguelito@platzi.com",
   instagram: "miguelito_feliz",
   learningPaths: [escuelaData, escuelaVideojuegos]
+});
+
+const freddy = new TeacherStudent({
+  name: "Freddy Vega",
+  username: "freddier",
+  email: "f@gep.com",
+  instagram: "freddier",
 });
 
 // / / / / / / / / / / / / / / / ENCAPSULAMENTO / / / / / / / / / / 
@@ -187,7 +291,7 @@ function videoStop(id){
   console.log("Pausamos la url" + urlSecreta)
 }
 
-export class PlatziClass { // usamos "export" para definir en los modulos, cuales son los unicos bloques de codigo, con el cual podemos ejecutar desde cualquir otro script 
+ class PlatziClass { // usamos "export" para definir en los modulos, cuales son los unicos bloques de codigo, con el cual podemos ejecutar desde cualquir otro script 
   constructor({
     name,
     videoID,
@@ -202,3 +306,4 @@ export class PlatziClass { // usamos "export" para definir en los modulos, cuale
     videoStop(this.videoID) 
   }
 }
+

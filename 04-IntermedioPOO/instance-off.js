@@ -106,69 +106,31 @@ function Student({
 
 
     if(isArray(learningPaths)){
-        this.learningPaths = [];
-    }
-
-    // validar  cada elemento dentro de learningPaths
-    for(learningPathIndex in learningPaths){
-        // validar si cada elemento es una instancia del prototipo leraningPaths
-        if(learningPaths[learningPathIndex] instanceof LearningPath){
-            this.learningPaths.push(learningPaths[learningPathIndex])
+        this._learningPaths = [];
+        
+        // validar  cada elemento dentro de learningPaths
+        for (learningPathIndex in learningPaths) {
+          this.learningPaths = learningPaths[learningPathIndex]
         }
     }
-    
-  // El parametro que recibe la funcion es igual a un objeto bacio "={}"
-
-  // Guardamos propiedades privadas que no se pueden modificar directamente
-//   const private = {
-//     _name: name,
-//     _learningPaths: learningPaths,
-//   };
-
-   // Aqui guardamos todas las propiedades publicas
-//   const public = {
-//     age,
-//     email,
-//     socialMedia: {
-//       twitter,
-//       instagram,
-//       facebook,
-//     },
-//     approvedCourses,
-//     get name() {
-//       return private["_name"];
-//     },
-//     set name(newName) {
-//       if (newName.length != 0) {
-//         private["_name"] = newName;
-//       } else {
-//         console.warn("Tu nombre debe tener al menos 1 caracter");
-//       }
-//     },
-     // acceder a mis rutas de aprendizaje
-//     get learningPaths() {
-//       return private["_learningPaths"];
-//     },
-     // seter ruta de aprendizaje validando que exista una ruta de aprendizade
-//     set learningPaths(newLP) {
-//       if (!newLP.name) {
-//         console.warn("Tu LP no tiene la propiedad name");
-//         return; // "return" impide que se siga ejecutando el codigo si se comple la condicion
-//       }
-//       if (!newLP.courses) {
-//         console.warn("Tu LP no tiene courses");
-//         return;
-//       }
-//       if (!isArray(newLP.courses)) {
-//         console.warn("Tu LP no es una lista de (*cursos)");
-//         return;
-//       }
-//       private["_learningPaths"].push(newLP);
-//     },
-//   };
-
-//   return public;
 }
+
+// Propiedades que queremos protejer
+Object.defineProperty(Student.prototype, "learningPaths", {
+  get(){
+    return this._learningPaths;
+  },
+  set(newLp) {
+    
+      // validar si cada elemento es una instancia del prototipo leraningPaths
+      if ( newLp instanceof LearningPath) {
+        this._learningPaths.push(newLp);
+      } else {
+        console.warm("Alguno de los learning paths no es una instancia del prototipo LearningPath")
+      }
+    
+  }
+});
 
 // Nueva instancia del prototipo Student 
 const escuelaWeb = new LearningPath ({name: "Escuela de WebDev"});

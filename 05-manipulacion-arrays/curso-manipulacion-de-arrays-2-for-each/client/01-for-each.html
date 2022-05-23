@@ -1,40 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="app"></div>
+    <!-- for each  -->
     <script>
-        const products = [
-            { title: 'Burger', price: 121 },
-            { title: 'Pizza', price: 20 },
-        ];
-        const app = document.getElementById('app');
-        products.forEach(product => {
-            app.innerHTML += `<li>${product.title} - ${product.price}</li>`;
-        })
+      const products = [
+        { title: "Burger", price: 121 },
+        { title: "Pizza", price: 20 },
+      ];
+      const app = document.getElementById("app");
+      products.forEach((product) => {
+        app.innerHTML += `<li>${product.title} - ${product.price}</li>`;
+      });
     </script>
-    <div id ="app2">
-        <h1>Reto Task</h1>
-        <script>
-            const tasks = [
-                {title: 'estudiar platzi'},
-                {title: 'escombrar cuarto'},
-                {title: 'Pasear perros' },
-                {title: 'Lavar platos' },
-            ];
-            const app2 = document.getElementById("app2")
-            tasks.forEach(task => {
-                app2.innerHTML += `<li>
+    <!-- Map  -->
+    <div id="app2"></div>
+    <script>
+      const products2 = [
+        { title: "icecream", price: 21 },
+        { title: "cake", price: 300 },
+      ];
+      const app2 = document.getElementById("app2");
+      const list = products2.map((product) => {
+        return `<li>${product.title} - ${product.price}</li>`;
+      });
+      app2.innerHTML = list.join('')
+    </script>
+    <div id="app3">
+      <h1>Reto Task</h1>
+      <script>
+        const tasks = [
+          { title: "estudiar platzi" },
+          { title: "escombrar cuarto" },
+          { title: "Pasear perros" },
+          { title: "Lavar platos" },
+        ];
+        const app3 = document.getElementById("app3");
+        tasks.forEach((task) => {
+          app3.innerHTML += `<li>
                     Nombre: ${task.title}
                     <input type = "checkbox">
-                    </li>`  
-            });
-        </script>
+                    </li>`;
+        });
+      </script>
     </div>
-</body>
+  </body>
 </html>

@@ -15,6 +15,7 @@ for(let index = 0; index < words.length; index++){
 
 console.log('newArray', newArray);
 console.log('original', words);
+// filtrar con filter
 const rta = words.filter(item => item.length >=6);
 console.log('rta', rta);
 console.log('original', words);

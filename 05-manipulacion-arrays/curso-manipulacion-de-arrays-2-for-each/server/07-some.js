@@ -76,4 +76,4 @@ const isOverlap = (newDate) => {
     });
 };
 
-console.log(isOverlap(newAppointment));g
+console.log(isOverlap(newAppointment));

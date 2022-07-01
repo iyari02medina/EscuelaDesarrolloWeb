@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "callback": "node 02-challenge.js"
   },
   "keywords": [
     "javascript",
     "asincronismo"
   ],
   "author": "Iyari Medina iyari.m.medina@gmail.com",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "xmlhttprequest": "^1.8.0"
+  }
 }
-

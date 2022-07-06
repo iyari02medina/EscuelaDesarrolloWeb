@@ -17,7 +17,7 @@ const anotherFunction = async (urlApi) =>{
         console.log(product.title);
         console.log(category.name);
     } catch (error) {
-        console.error(error)
+        console.error(error);
     }
 }
 

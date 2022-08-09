@@ -1,8 +1,11 @@
 const API_URL_RANDOM =
-  "https://api.thecatapi.com/v1/images/search?limit=2&api_key=2006c435-9326-43c1-99a8-c0157a79a0d0";
+  "https://api.thecatapi.com/v1/images/search?limit=2";
 const API_URL_FAVOTITES =
-  "https://api.thecatapi.com/v1/favourites?api_key=2006c435-9326-43c1-99a8-c0157a79a0d0";
+  "https://api.thecatapi.com/v1/favourites?";
+const API_URL_UPLOAD =
+  "https://api.thecatapi.com/v1/images/upload";
 const API_URL_FAVOTITES_DELETE = (id) =>`https://api.thecatapi.com/v1/favourites/${id}?api_key=2006c435-9326-43c1-99a8-c0157a79a0d0`;
+
 
 const spanError = document.getElementById("error");
 
@@ -29,7 +32,12 @@ async function loadRandomMichis() {
 }
 
 async function loadFavouriteMichis() {
-  const res = await fetch(API_URL_FAVOTITES);
+  const res = await fetch(API_URL_FAVOTITES, {
+    method: 'GET',
+    headers: {
+      'X-API-KEY': '2006c435-9326-43c1-99a8-c0157a79a0d0',
+    }
+  });
   const data = await res.json();
   console.log("Favoritos");
   console.log(data);
@@ -67,6 +75,7 @@ async function saveFavouriteMichi(id) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "X-API-KEY": "2006c435-9326-43c1-99a8-c0157a79a0d0",
     },
     body: JSON.stringify({
       image_id: id,
@@ -88,6 +97,9 @@ async function saveFavouriteMichi(id) {
 async function deleteFavouriteMichi(id) {
   const res = await fetch(API_URL_FAVOTITES_DELETE(id), {
     method: "DELETE",
+    headers: {
+      "X-API-KEY": "2006c435-9326-43c1-99a8-c0157a79a0d0",
+    },
   });
   const data = await res.json();
 
@@ -97,6 +109,22 @@ async function deleteFavouriteMichi(id) {
     console.log("Michi eliminado de favoritos");
     loadFavouriteMichis();
   }
+}
+
+async function uploadMichiPhoto(){
+  const form = document.getElementById("uploadingform");
+  const formData = new FormData(form);
+
+  console.log(formData.get('file'))
+
+  const res = await fetch(API_URL_UPLOAD, {
+    method: "POST",
+    headers: {
+      // 'Content-Type': 'multipart/form-data',
+      "X-API-KEY": "2006c435-9326-43c1-99a8-c0157a79a0d0",
+    },
+    body: formData,
+  });
 }
 
 loadRandomMichis();
